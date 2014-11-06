@@ -2,9 +2,11 @@
 ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
+require 'pry'
+require 'pry-nav'
 require 'rspec/rails'
 require 'shoulda/matchers'
-require 'factory_girl'
+require 'factory_girl_rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
