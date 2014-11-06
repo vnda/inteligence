@@ -39,6 +39,7 @@ group :test do
   gem 'rspec-mocks'
   gem 'rspec-expectations'
   gem 'vcr'
+  gem 'shoulda-matchers', require: false
 end
 
 group :development, :test do
