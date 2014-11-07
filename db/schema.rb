@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141106180701) do
+ActiveRecord::Schema.define(version: 20141107163140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "monthly_reports", force: true do |t|
+    t.date     "reference_date"
+    t.integer  "orders_count"
+    t.float    "orders_yield"
+    t.float    "average_ticket"
+    t.integer  "items_count"
+    t.integer  "store_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "monthly_reports", ["store_id"], name: "index_monthly_reports_on_store_id", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"
@@ -23,6 +36,8 @@ ActiveRecord::Schema.define(version: 20141106180701) do
     t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "last_page",     default: 1
+    t.integer  "last_position", default: 0
   end
 
 end

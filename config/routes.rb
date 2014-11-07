@@ -32,6 +32,14 @@ Rails.application.routes.draw do
   #     resource :seller
   #   end
 
+  namespace :api, :defaults => { :format => 'json' }  do
+    namespace :v1 do
+      resources :store do
+        get 'monthly_report'
+      end
+    end
+  end
+
   # Example resource route with more complex sub-resources:
   #   resources :products do
   #     resources :comments
