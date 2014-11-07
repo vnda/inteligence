@@ -1,9 +1,10 @@
 require 'httparty'
 require 'pp'
 
-module Vnda
+module VndaAPI
   class Orders
     include HTTParty
+    format :json
 
     def initialize(base_uri, user, password, page_size = 5)
       @page_size = page_size
@@ -34,7 +35,7 @@ module Vnda
 
     private
     def get(url)
-      JSON.parse(self.class.get(url, {basic_auth: @auth}))
+      JSON.parse(self.class.get(url, {basic_auth: @auth}).body)
     end
   end
 end

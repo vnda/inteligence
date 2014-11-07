@@ -1,4 +1,4 @@
-load 'lib/vnda/orders.rb'
+load 'lib/vnda_api/orders.rb'
 
 module Store::Report
   
@@ -9,7 +9,7 @@ module Store::Report
     end
 
     def update_orders
-      api = Vnda::Orders.new(api_url,user,password)
+      api = VndaAPI::Orders.new(api_url,user,password)
 
       last_page = 1
       result = []

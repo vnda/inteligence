@@ -1,10 +1,10 @@
 require 'spec_helper'
-load 'lib/vnda/orders.rb'
+load 'lib/vnda_api/orders.rb'
 
-describe Vnda::Orders do
+describe VndaAPI::Orders do
 
   let(:test_store) { build(:test_store) }
-  let(:orders) { Vnda::Orders.new(test_store.api_url, test_store.user, test_store.password, 20) }
+  let(:orders) { VndaAPI::Orders.new(test_store.api_url, test_store.user, test_store.password, 20) }
 
   # TODO: need to mock httparty get...
     

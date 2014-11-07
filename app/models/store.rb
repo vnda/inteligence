@@ -1,5 +1,3 @@
-load 'lib/vnda/orders.rb'
-
 class Store < ActiveRecord::Base
   include Store::Report
   has_many :monthly_reports
