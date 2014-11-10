@@ -7,7 +7,7 @@ class MonthlyReport < ActiveRecord::Base
       orders_count: orders_count,
       orders_yield: orders_yield,
       average_ticket: average_ticket,
-      items_count: items_count
+      average_itens: average_itens
     }
   end
 end

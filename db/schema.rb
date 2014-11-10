@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107163140) do
+ActiveRecord::Schema.define(version: 20141110121832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,13 +21,37 @@ ActiveRecord::Schema.define(version: 20141107163140) do
     t.integer  "orders_count"
     t.float    "orders_yield"
     t.float    "average_ticket"
-    t.integer  "items_count"
+    t.integer  "average_itens"
     t.integer  "store_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "monthly_reports", ["store_id"], name: "index_monthly_reports_on_store_id", using: :btree
+
+  create_table "order_items", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "quantity"
+    t.string   "reference"
+    t.string   "name"
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
+
+  create_table "orders", force: true do |t|
+    t.string   "code"
+    t.date     "reference_date"
+    t.integer  "store_id"
+    t.float    "total"
+    t.string   "reference_state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["store_id"], name: "index_orders_on_store_id", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"

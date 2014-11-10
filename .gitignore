@@ -6,6 +6,7 @@
 
 .DS_Store
 .env
+logfile
 # Ignore bundler config.
 /.bundle
 

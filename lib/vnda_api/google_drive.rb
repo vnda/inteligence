@@ -25,7 +25,7 @@ module VndaAPI
       worksheet[2,2] = "Total de pedidos"
       worksheet[2,3] = "Ticket médio"
       worksheet[2,4] = "Faturamento"
-      worksheet[2,5] = "Total de itens"
+      worksheet[2,5] = "Média de itens por pedido"
       worksheet[2,6] = "Taxa de Conversão"
       worksheet[2,7] = "Visitas"
       worksheet[2,8] = "Page view"
@@ -38,7 +38,7 @@ module VndaAPI
         worksheet[3 + index,2] = report.orders_count
         worksheet[3 + index,3] = report.average_ticket
         worksheet[3 + index,4] = report.orders_yield
-        worksheet[3 + index,5] = report.items_count
+        worksheet[3 + index,5] = report.average_itens
       end 
     end
   end

@@ -4,7 +4,8 @@ class Api::V1::StoreController < ActionController::Base
 
   def monthly_report
     store = Store.find(params[:store_id])
-    store.update_orders
+    store.load_orders!
+    store.process_monthly_report
 
     render json: {spreedsheet_url: VndaAPI::Drive.create_monthly_report_spreedsheet(store)}
   end
