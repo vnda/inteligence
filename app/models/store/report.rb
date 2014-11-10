@@ -19,6 +19,22 @@ module Store::Report
         monthly_report.update(average_itens: average_itens, orders_count: orders_count, orders_yield: orders_yield, average_ticket: average_ticket)
       end
     end
+
+    def state_report
+      self.state_reports.map(&:report)
+    end
+
+    def process_state_report
+      grouped_result = self.orders.group_by {|x|x['reference_state']}
+      grouped_result.each do |key, value|
+        orders_yield = value.map{|x| x['total'] }.reduce(:+)
+        orders_count = value.count
+        average_itens = value.map{|x| x.order_items.count }.reduce(:+) / orders_count
+        average_ticket = (orders_yield/orders_count)
+        state_report = self.state_reports.find_or_create_by(state: key)
+        state_report.update(average_itens: average_itens, orders_count: orders_count, orders_yield: orders_yield, average_ticket: average_ticket)
+      end
+    end
   end
   
   def self.included(receiver)

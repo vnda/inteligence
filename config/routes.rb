@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :store do
         get 'monthly_report'
+        get 'state_report'
       end
     end
   end

@@ -1,7 +1,7 @@
-class CreateMonthlyReports < ActiveRecord::Migration
+class CreateStateReports < ActiveRecord::Migration
   def change
-    create_table :monthly_reports do |t|
-      t.date :reference_date
+    create_table :state_reports do |t|
+      t.string :state, index: true
       t.integer :orders_count
       t.float :orders_yield, precision: 2
       t.float :average_ticket, precision: 2

@@ -10,15 +10,26 @@ module VndaAPI
       spreedsheed = session.create_spreadsheet("#{store.name} - Relatório mês a mês")
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
       worksheet = spreedsheed.worksheets[0]
-      create_header(worksheet)
-      fill_data(worksheet, store.monthly_reports)
+      create_header(worksheet, "Período")
+      fill_monthly_data(worksheet, store.monthly_reports)
+      worksheet.save
+      spreedsheed.human_url
+    end
+
+    def self.create_state_report_spreedsheet(store)
+      session = GoogleDrive.login(ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD'])
+      spreedsheed = session.create_spreadsheet("#{store.name} - Relatório por estado")
+      spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
+      worksheet = spreedsheed.worksheets[0]
+      create_header(worksheet, "Estado")
+      fill_state_data(worksheet, store.state_reports)
       worksheet.save
       spreedsheed.human_url
     end
 
     private
-    def self.create_header(worksheet)
-      worksheet[1,1] = "Período"
+    def self.create_header(worksheet, head)
+      worksheet[1,1] = head
       worksheet[1,2] = "Pedidos Confirmados"
       worksheet[1,7] = "Audiência"
 
@@ -32,7 +43,17 @@ module VndaAPI
       worksheet[2,9] = "Usuários Únicos"
     end
 
-    def self.fill_data(worksheet, reports)
+    def self.fill_state_data(worksheet, reports)
+      reports.each_with_index do |report, index|
+        worksheet[3 + index,1] = report.state
+        worksheet[3 + index,2] = report.orders_count
+        worksheet[3 + index,3] = report.average_ticket
+        worksheet[3 + index,4] = report.orders_yield
+        worksheet[3 + index,5] = report.average_itens
+      end 
+    end
+
+    def self.fill_monthly_data(worksheet, reports)
       reports.each_with_index do |report, index|
         worksheet[3 + index,1] = report.reference_date.strftime("%m - %Y")
         worksheet[3 + index,2] = report.orders_count
