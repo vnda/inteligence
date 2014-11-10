@@ -27,7 +27,27 @@ module VndaAPI
       spreedsheed.human_url
     end
 
+    def self.create_abc_curve_report_spreedsheet(store)
+      session = GoogleDrive.login(ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD'])
+      spreedsheed = session.create_spreadsheet("#{store.name} - Curva ABC de produtos vendidos")
+      spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
+      worksheet = spreedsheed.worksheets[0]
+      create_abc_curve_header(worksheet)
+      fill_abc_curve_data(worksheet, store.abc_curve_reports)
+      worksheet.save
+      spreedsheed.human_url
+    end
+
+
     private
+    def self.create_abc_curve_header(worksheet)
+      worksheet[1,1] = "Referência"
+      worksheet[1,2] = "Nome"
+      worksheet[1,3] = "Quantidade"
+      worksheet[1,4] = "Preço"
+      worksheet[1,5] = "Valor total"
+    end
+
     def self.create_header(worksheet, head)
       worksheet[1,1] = head
       worksheet[1,2] = "Pedidos Confirmados"
@@ -41,6 +61,16 @@ module VndaAPI
       worksheet[2,7] = "Visitas"
       worksheet[2,8] = "Page view"
       worksheet[2,9] = "Usuários Únicos"
+    end
+
+    def self.fill_abc_curve_data(worksheet, reports)
+      reports.each_with_index do |report, index|
+        worksheet[2 + index,1] = report.reference
+        worksheet[2 + index,2] = report.name
+        worksheet[2 + index,3] = report.quantity
+        worksheet[2 + index,4] = report.price
+        worksheet[2 + index,5] = report.total_price
+      end 
     end
 
     def self.fill_state_data(worksheet, reports)

@@ -13,14 +13,14 @@ module Store::OrderLoader
       response = api.confirmed(last_page)
       while !response.empty? do
         response.each do |order|
-
           hash = order.slice("code", "total")
-          hash['reference_date'] = Date.parse(order['updated_at'])
-          hash['reference_state'] = api.shipping_address(hash['code'])['state']
-          order = Order.find_or_create_by(code: hash['code'])
-          order.update(hash)
-          load_items(api, hash['code'], order)
-          self.orders << order
+          unless Order.find_by(code: hash['code'])
+            hash['reference_date'] = Date.parse(order['updated_at'])
+            hash['reference_state'] = api.shipping_address(hash['code'])['state']
+            order = Order.create(hash)
+            load_items(api, hash['code'], order)
+            self.orders << order
+          end
         end
         last_page += 1
         response = api.confirmed(last_page)

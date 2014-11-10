@@ -4,6 +4,22 @@ module Store::Report
   
   module InstanceMethods
 
+    def abc_curve_report
+      self.abc_curve_reports.order(quantity: :desc).map(&:report)
+    end
+
+    def process_abc_curve_report
+      grouped_result = self.order_itens.group_by {|x|x['reference']}
+      grouped_result.each do |key, value|
+        quantity = value.map(&:quantity).reduce(:+)
+        total_price = value.map(&:price).reduce(:+)
+        price = total_price / quantity
+        name = value.first.name
+        abc_curve_report = self.abc_curve_reports.find_or_create_by(reference: key)
+        abc_curve_report.update(quantity: quantity, total_price: total_price, price: price, name: name)
+      end
+    end
+
     def monthly_report
       self.monthly_reports.map(&:report)
     end

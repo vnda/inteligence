@@ -18,4 +18,12 @@ class Api::V1::StoreController < ActionController::Base
     render json: {spreedsheet_url: VndaAPI::Drive.create_state_report_spreedsheet(store)}
   end
 
+  def abc_curve_report
+    store = Store.find(params[:store_id])
+    store.load_orders!
+    store.process_abc_curve_report
+
+    render json: {spreedsheet_url: VndaAPI::Drive.create_abc_curve_report_spreedsheet(store)}
+  end
+
 end

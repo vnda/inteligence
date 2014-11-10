@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110153839) do
+ActiveRecord::Schema.define(version: 20141110160046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "abc_curve_reports", force: true do |t|
+    t.integer  "store_id"
+    t.string   "reference"
+    t.string   "name"
+    t.integer  "quantity"
+    t.float    "price"
+    t.float    "total_price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "abc_curve_reports", ["store_id"], name: "index_abc_curve_reports_on_store_id", using: :btree
 
   create_table "monthly_reports", force: true do |t|
     t.date     "reference_date"

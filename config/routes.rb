@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       resources :store do
         get 'monthly_report'
         get 'state_report'
+        get 'abc_curve_report'
       end
     end
   end
