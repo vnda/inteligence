@@ -1,6 +1,3 @@
-load 'lib/vnda_api/orders.rb'
-load 'lib/vnda_api/ga_integration.rb'
-
 module Store::Reports::Monthly
   
   module InstanceMethods
@@ -24,6 +21,15 @@ module Store::Reports::Monthly
         reports << monthly_hash
       end
       reports
+    end
+
+    def monthly_report(start_date, end_date)
+      report = monthly_reports.find_by(start: start_date, end: end_date)
+      return report.drive_url if report
+      reports = monthly_report_for(start_date, end_date)
+      drive_url = VndaAPI::Drive.create_monthly_report_spreedsheet(self, reports, start_date, end_date)
+      monthly_reports.create(start: start_date, end: end_date, drive_url: drive_url)
+      drive_url
     end
 
     def ga_by_month(ga_visits, reference_date)

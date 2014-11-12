@@ -1,5 +1,3 @@
-load 'lib/vnda_api/orders.rb'
-
 module Store::Reports::AbcCurve
   
   module InstanceMethods
@@ -19,6 +17,15 @@ module Store::Reports::AbcCurve
         reports << hash
       end
       reports.sort{|x| x[:quantity] }
+    end
+
+    def abc_curve_report(start_date, end_date)
+      report = abc_curve_reports.find_by(start: start_date, end: end_date)
+      return report.drive_url if report
+      reports = abc_curve_report_for(start_date, end_date)
+      drive_url = VndaAPI::Drive.create_abc_curve_report_spreedsheet(self, reports, start_date, end_date)
+      abc_curve_reports.create(start: start_date, end: end_date, drive_url: drive_url)
+      drive_url
     end
   end
   

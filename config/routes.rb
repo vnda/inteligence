@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'stores#index'
+  
   namespace :api, :defaults => { :format => 'json' }  do
     namespace :v1 do
       resource :monthly, only: [:show]
@@ -6,4 +8,5 @@ Rails.application.routes.draw do
       resource :abc_curve, only: [:show]
     end
   end
+  resources :stores
 end

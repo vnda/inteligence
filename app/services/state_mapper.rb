@@ -44,7 +44,4 @@ class StateMapper
   def self.state_for(state)
     STATES[state] || state
   end
-
 end
-
-

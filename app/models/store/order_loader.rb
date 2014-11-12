@@ -1,5 +1,3 @@
-load 'lib/vnda_api/orders.rb'
-
 module Store::OrderLoader
   
   module InstanceMethods

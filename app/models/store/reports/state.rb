@@ -1,9 +1,15 @@
-load 'lib/vnda_api/orders.rb'
-load 'lib/vnda_api/ga_integration.rb'
-
 module Store::Reports::State
   
   module InstanceMethods
+
+    def state_report(start_date, end_date)
+      report = state_reports.find_by(start: start_date, end: end_date)
+      return report.drive_url if report
+      reports = state_report_for(start_date, end_date)
+      drive_url = VndaAPI::Drive.create_state_report_spreedsheet(self, reports, start_date, end_date)
+      state_reports.create(start: start_date, end: end_date, drive_url: drive_url)
+      drive_url
+    end
 
     def state_report_for(start_date, end_date)
       results = initial_report
