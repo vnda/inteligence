@@ -3,36 +3,42 @@ load 'lib/vnda_api/orders.rb'
 module Store::OrderLoader
   
   module InstanceMethods
-
-    # TODO: Starts where stopped last time...
-    def load_orders!
+    def orders(start_date, end_date)
       api = VndaAPI::Orders.new(api_url,user,password)
 
       last_page = 1
       result = []
-      response = api.confirmed(last_page)
+      response = api.confirmed(start_date, end_date, last_page)
       while !response.empty? do
         response.each do |order|
-          hash = order.slice("code", "total")
-          unless Order.find_by(code: hash['code'])
-            hash['reference_date'] = Date.parse(order['updated_at'])
-            hash['reference_state'] = api.shipping_address(hash['code'])['state']
-            order = Order.create(hash)
-            load_items(api, hash['code'], order)
-            self.orders << order
-          end
+          hash = {}
+          hash[:code] = order['code']
+          hash[:total] = order['total']
+          hash[:reference_date] = Date.parse(order['received_at'])
+          hash[:reference_state] = api.shipping_address(hash[:code])['state']
+          hash[:itens_count] = api.items(hash[:code]).map{|y| y['quantity']}.reduce(:+) || 0
+          result << hash
         end
         last_page += 1
-        response = api.confirmed(last_page)
+        response = api.confirmed(start_date, end_date, last_page)
       end
-      self.save
+      result
     end
 
-    def load_items(api, code, order)
-      api_order_items = api.items(code)
-      api_order_items.each do |api_order_item| 
-        order.order_items << OrderItem.create(name: api_order_item['product_name'], quantity: api_order_item['quantity'], price: api_order_item['price'], reference: api_order_item['reference'])
+    def order_itens(start_date, end_date)
+      api = VndaAPI::Orders.new(api_url,user,password)
+
+      last_page = 1
+      result = []
+      response = api.confirmed(start_date, end_date, last_page)
+      while !response.empty? do
+        response.each do |order|
+          result.concat(api.items(order['code']))
+        end
+        last_page += 1
+        response = api.confirmed(start_date, end_date, last_page)
       end
+      result
     end
   end
   

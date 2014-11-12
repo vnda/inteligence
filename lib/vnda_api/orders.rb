@@ -6,7 +6,7 @@ module VndaAPI
     include HTTParty
     format :json
 
-    def initialize(base_uri, user, password, page_size = 5)
+    def initialize(base_uri, user, password, page_size = 100)
       @page_size = page_size
       @base_uri = base_uri
       @auth = {username: user, password: password}
@@ -16,8 +16,8 @@ module VndaAPI
       get("http://#{@base_uri}/api/v2/orders")
     end
 
-    def confirmed(page = 1)
-      get("http://#{@base_uri}/api/v2/orders?status=confirmed&per_page=#{@page_size}&page=#{page}")
+    def confirmed(start_date, end_date, page = 1)
+      get("http://#{@base_uri}/api/v2/orders?status=confirmed&per_page=#{@page_size}&page=#{page}?start=#{start_date.strftime("%d/%m/%Y")}&end=#{end_date.strftime("%d/%m/%Y")}")
     end
 
     def shipping_address(order_code)

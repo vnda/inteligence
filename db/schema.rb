@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110160046) do
+ActiveRecord::Schema.define(version: 20141111170515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,10 @@ ActiveRecord::Schema.define(version: 20141110160046) do
     t.integer  "store_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "pageviews"
+    t.integer  "visits"
+    t.integer  "unique_users"
+    t.float    "conversion_tax"
   end
 
   add_index "monthly_reports", ["store_id"], name: "index_monthly_reports_on_store_id", using: :btree
@@ -88,6 +92,8 @@ ActiveRecord::Schema.define(version: 20141110160046) do
     t.datetime "updated_at"
     t.integer  "last_page",     default: 1
     t.integer  "last_position", default: 0
+    t.string   "token"
+    t.string   "ga_token"
   end
 
 end
