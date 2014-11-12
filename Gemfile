@@ -8,6 +8,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'httparty'
 gem 'google_drive'
+gem 'rails_12factor'
 
 gem 'jquery-rails'
 gem 'turbolinks'
