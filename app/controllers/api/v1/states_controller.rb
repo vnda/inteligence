@@ -1,8 +1,14 @@
 class Api::V1::StatesController < ApplicationController
 
   def show
-    start_date = Date.parse(params['start'])
-    end_date = Date.parse(params['end'])
-    render json: {spreedsheet_url: store.state_report(start_date, end_date)}
+    begin
+      render json: {spreedsheet_url: store.state_report(start_date, end_date)}
+    rescue ArgumentError
+      render status: :bad_request, json: { error: 'start and end dates are required.' }
+    rescue TypeError
+      render status: :bad_request, json: { error: 'start and end dates are required.' }
+    rescue ActiveRecord::RecordNotFound
+      render status: :forbidden, json: { error: 'Invalid token' }
+    end
   end
 end

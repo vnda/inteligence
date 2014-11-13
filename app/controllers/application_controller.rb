@@ -9,6 +9,14 @@ class ApplicationController < ActionController::Base
     @store ||= Store.find_by!(token: params[:token])
   end
 
+  def end_date
+    Date.parse(params['end'])
+  end
+
+  def start_date
+    Date.parse(params['start'])
+  end
+
   def authenticate!
     if Rails.env == "production"
       authenticate_or_request_with_http_basic do |username, password|
