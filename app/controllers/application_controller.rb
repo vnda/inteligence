@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
     Date.parse(params['start'])
   end
 
+  def email
+    params['email']
+  end
+
   def authenticate!
     if Rails.env == "production"
       authenticate_or_request_with_http_basic do |username, password|

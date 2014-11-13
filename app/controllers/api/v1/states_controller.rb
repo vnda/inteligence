@@ -2,7 +2,7 @@ class Api::V1::StatesController < ApplicationController
 
   def show
     begin
-      render json: {spreedsheet_url: store.state_report(start_date, end_date)}
+      render json: {spreedsheet_url: store.state_report(start_date, end_date, email)}
     rescue ArgumentError
       render status: :bad_request, json: { error: 'start and end dates are required.' }
     rescue TypeError

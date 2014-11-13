@@ -30,6 +30,7 @@ class StateMapper
     'TO'=>'Tocantins',
     'Amapa' => 'Amapá',
     'Ceara' => 'Ceará',
+    'Espirito Santo' => 'Espírito Santo',
     'Federal District' => 'Distrito Federal',
     'State of Goias' => 'Goiás',
     'Maranhao' => 'Maranhão',

@@ -5,10 +5,11 @@ require "google_drive"
 module VndaAPI
   class Drive
 
-    def self.create_monthly_report_spreedsheet(store, reports, start_date, end_date)
+    def self.create_monthly_report_spreedsheet(store, reports, start_date, end_date, email)
       session = GoogleDrive.login(ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD'])
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Relatório mês a mês", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
+      spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
       worksheet = spreedsheed.worksheets[0]
       worksheet.max_rows = reports.count + 2
       worksheet.max_cols = 9
@@ -18,10 +19,11 @@ module VndaAPI
       spreedsheed.human_url
     end
 
-    def self.create_state_report_spreedsheet(store, reports, start_date, end_date)
+    def self.create_state_report_spreedsheet(store, reports, start_date, end_date, email)
       session = GoogleDrive.login(ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD'])
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Relatório por estado", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
+      spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
       worksheet = spreedsheed.worksheets[0]
       worksheet.max_rows = reports.count + 2
       worksheet.max_cols = 9
@@ -31,10 +33,11 @@ module VndaAPI
       spreedsheed.human_url
     end
 
-    def self.create_abc_curve_report_spreedsheet(store, reports, start_date, end_date)
+    def self.create_abc_curve_report_spreedsheet(store, reports, start_date, end_date, email)
       session = GoogleDrive.login(ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD'])
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Curva ABC de produtos vendidos", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
+      spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
       worksheet = spreedsheed.worksheets[0]
       worksheet.max_rows = reports.count + 1
       worksheet.max_cols = 5
@@ -74,8 +77,8 @@ module VndaAPI
         worksheet[2 + index,1] = "'"+report[:reference]
         worksheet[2 + index,2] = report[:name]
         worksheet[2 + index,3] = report[:quantity]
-        worksheet[2 + index,4] = report[:price]
-        worksheet[2 + index,5] = report[:total_price]
+        worksheet[2 + index,4] = "R$ " + report[:price].round(2).to_s
+        worksheet[2 + index,5] = "R$ " + report[:total_price].round(2).to_s
       end
     end
 

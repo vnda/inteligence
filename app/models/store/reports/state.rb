@@ -2,11 +2,11 @@ module Store::Reports::State
   
   module InstanceMethods
 
-    def state_report(start_date, end_date)
+    def state_report(start_date, end_date, email)
       report = state_reports.find_by(start: start_date, end: end_date)
       return report.drive_url if report
       reports = state_report_for(start_date, end_date)
-      drive_url = VndaAPI::Drive.create_state_report_spreedsheet(self, reports, start_date, end_date)
+      drive_url = VndaAPI::Drive.create_state_report_spreedsheet(self, reports, start_date, end_date, email)
       state_reports.create(start: start_date, end: end_date, drive_url: drive_url)
       drive_url
     end
@@ -15,14 +15,9 @@ module Store::Reports::State
       results = initial_report
       process_api_data(results, start_date, end_date)
       process_ga_data(results, start_date, end_date)
-      
-      ga_visits = VndaAPI::GaIntegration.new(self.ga_token, start_date, end_date).state_visits
-      unless ga_visits
-        ga_visits = ga_visits.group_by {|x| StateMapper.state_for(x['reference_state'])}
-        results.merge(ga_visits) {|key, results, visits| results.merge(visits) }
-      end
+
       results
-    end
+    end    
 
     def process_api_data(results, start_date, end_date)
       grouped_result = self.orders(start_date, end_date).group_by {|x| StateMapper.state_for(x[:reference_state])}
@@ -37,13 +32,14 @@ module Store::Reports::State
 
     def process_ga_data(results, start_date, end_date)
       ga_visits = VndaAPI::GaIntegration.new(self.ga_token, start_date, end_date).state_visits
-      unless ga_visits
-        ga_visits = ga_visits.group_by {|x| StateMapper.state_for(x['reference_state'])}
+      if ga_visits
+        ga_visits = ga_visits['by_month'].group_by {|x| StateMapper.state_for(x['region'])}
         ga_visits.each do |key, value|
-          results[key][:pageviews] = value['pageviews']
-          results[key][:visits] = value['sessions']
-          results[key][:unique_users] = value['users']
-          results[key][:conversion_tax] = conversion_tax(results[key][:orders_count], value['sessions'])
+          next if key == '(not set)'
+          results[key][:pageviews] = value.first['pageviews']
+          results[key][:visits] = value.first['sessions']
+          results[key][:unique_users] = value.first['users']
+          results[key][:conversion_tax] = conversion_tax(results[key][:orders_count], value.first['sessions'])
         end
       end
       results

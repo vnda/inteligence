@@ -23,11 +23,11 @@ module Store::Reports::Monthly
       reports
     end
 
-    def monthly_report(start_date, end_date)
+    def monthly_report(start_date, end_date, email)
       report = monthly_reports.find_by(start: start_date, end: end_date)
       return report.drive_url if report
       reports = monthly_report_for(start_date, end_date)
-      drive_url = VndaAPI::Drive.create_monthly_report_spreedsheet(self, reports, start_date, end_date)
+      drive_url = VndaAPI::Drive.create_monthly_report_spreedsheet(self, reports, start_date, end_date, email)
       monthly_reports.create(start: start_date, end: end_date, drive_url: drive_url)
       drive_url
     end
