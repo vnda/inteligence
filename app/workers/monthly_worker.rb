@@ -7,6 +7,6 @@ class MonthlyWorker
     end_dt = Date.parse(end_date)
     reports = store.monthly_report_for(start_dt, end_dt)
     drive_url = VndaAPI::Drive.create_monthly_report_spreedsheet(store, reports, start_dt, end_dt, email)
-    monthly_reports.create(start: start_date, end: end_date, drive_url: drive_url)
+    store.monthly_reports.create(start: start_date, end: end_date, drive_url: drive_url)
   end
 end

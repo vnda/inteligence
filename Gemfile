@@ -12,6 +12,7 @@ gem 'rails_12factor'
 gem 'unicorn'
 gem 'unicorn-rails'
 gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
 
 gem 'jquery-rails'
 gem 'turbolinks'
