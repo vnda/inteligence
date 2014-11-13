@@ -10,6 +10,8 @@ module VndaAPI
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Relatório mês a mês", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
       worksheet = spreedsheed.worksheets[0]
+      worksheet.max_rows = reports.count + 2
+      worksheet.max_cols = 9
       create_header(worksheet, "Período")
       fill_monthly_data(worksheet, reports)
       worksheet.save
@@ -21,6 +23,8 @@ module VndaAPI
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Relatório por estado", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
       worksheet = spreedsheed.worksheets[0]
+      worksheet.max_rows = reports.count + 2
+      worksheet.max_cols = 9
       create_header(worksheet, "Estado")
       fill_state_data(worksheet, reports)
       worksheet.save
@@ -32,6 +36,8 @@ module VndaAPI
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Curva ABC de produtos vendidos", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
       worksheet = spreedsheed.worksheets[0]
+      worksheet.max_rows = reports.count + 1
+      worksheet.max_cols = 5
       create_abc_curve_header(worksheet)
       fill_abc_curve_data(worksheet, reports)
       worksheet.save
@@ -64,8 +70,8 @@ module VndaAPI
     end
 
     def self.fill_abc_curve_data(worksheet, reports)
-      reports.each_with_index do |report, index|
-        worksheet[2 + index,1] = report[:reference]
+      reports.sort_by{|x| x[:quantity]}.reverse!.each_with_index do |report, index|
+        worksheet[2 + index,1] = "'"+report[:reference]
         worksheet[2 + index,2] = report[:name]
         worksheet[2 + index,3] = report[:quantity]
         worksheet[2 + index,4] = report[:price]
@@ -82,16 +88,16 @@ module VndaAPI
 
     def self.fill_monthly_data(worksheet, reports)
       reports.each_with_index do |report, index|
-        worksheet[3 + index,1] = report[:reference_date]
+        worksheet[3 + index,1] = "'"+report[:reference_date]
         fill_line(worksheet, index, report)
       end 
     end
 
     def self.fill_line(worksheet, index, value)
       worksheet[3 + index,2] = value[:orders_count]
-      worksheet[3 + index,3] = value[:average_ticket]
-      worksheet[3 + index,4] = value[:orders_yield]
-      worksheet[3 + index,5] = value[:average_itens]
+      worksheet[3 + index,3] = "R$ " + value[:average_ticket].round(2).to_s
+      worksheet[3 + index,4] = "R$ " + value[:orders_yield].round(2).to_s
+      worksheet[3 + index,5] = value[:average_itens].round(2)
       worksheet[3 + index,6] = "#{value[:conversion_tax].round(4)}%"
       worksheet[3 + index,7] = value[:visits]
       worksheet[3 + index,8] = value[:pageviews]

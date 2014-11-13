@@ -13,10 +13,10 @@ module Store::Reports::Monthly
         monthly_hash[:orders_count] = value.count
         monthly_hash[:average_itens] = value.map{|x| x[:itens_count] }.reduce(:+).to_f / monthly_hash[:orders_count].to_f
         monthly_hash[:average_ticket] = monthly_hash[:orders_yield] / monthly_hash[:orders_count]
-        monthly_hash[:pageviews] = ga_by_month['pageviews'] || 0
-        monthly_hash[:visits] = ga_by_month['sessions'] || 0
-        monthly_hash[:unique_users] = ga_by_month['users'] || 0
-        monthly_hash[:conversion_tax] = conversion_tax(monthly_hash[:orders_count], ga_by_month['sessions'])
+        monthly_hash[:pageviews] = ga_by_month['pageviews'].to_i || 0
+        monthly_hash[:visits] = ga_by_month['sessions'].to_i || 0
+        monthly_hash[:unique_users] = ga_by_month['users'].to_i || 0
+        monthly_hash[:conversion_tax] = conversion_tax(monthly_hash[:orders_count], ga_by_month['sessions'].to_i)
         monthly_hash[:reference_date] =  key
         reports << monthly_hash
       end
