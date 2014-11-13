@@ -17,7 +17,7 @@ module VndaAPI
     end
 
     def confirmed(start_date, end_date, page = 1)
-      get("http://#{@base_uri}/api/v2/orders?status=confirmed&per_page=#{@page_size}&page=#{page}?start=#{start_date.strftime("%d/%m/%Y")}&end=#{end_date.strftime("%d/%m/%Y")}")
+      get("http://#{@base_uri}/api/v2/orders?status=confirmed&per_page=#{@page_size}&page=#{page}&start=#{start_date.strftime("%d/%m/%Y")}&end=#{end_date.strftime("%d/%m/%Y")}")
     end
 
     def shipping_address(order_code)
@@ -31,7 +31,6 @@ module VndaAPI
     def page_size
       @page_size
     end
-
 
     private
     def get(url)
