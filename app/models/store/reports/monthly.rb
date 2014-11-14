@@ -37,6 +37,7 @@ module Store::Reports::Monthly
       ga_visits['by_month'].each do |value|
         return value if value['year_month'] == reference_date.strftime("%Y%m").to_i
       end
+      {}
     end
 
     def conversion_tax(orders_count, sessions)
