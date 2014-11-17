@@ -5,8 +5,28 @@ require "google_drive"
 module VndaAPI
   class Drive
 
+    def self.create_session
+      c = Google::APIClient.new(application_name: Rails.application.engine_name)
+      key = OpenSSL::PKey::RSA.new ENV["GOOGLE_API_P12"], 'notasecret'
+
+      c.authorization = Signet::OAuth2::Client.new(
+        token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+        audience: 'https://accounts.google.com/o/oauth2/token',
+        scope: "https://www.googleapis.com/auth/drive " +
+          "https://docs.google.com/feeds/ " +
+          "https://docs.googleusercontent.com/ " +
+          "https://spreadsheets.google.com/feeds/",
+        issuer: ENV['GOOGLE_API_ACCOUNT_EMAIL'],
+        email: "insights@vnda.com.br",
+        signing_key: key
+      )
+
+      access_token = c.authorization.fetch_access_token!['access_token']
+      GoogleDrive.login_with_oauth(access_token)
+    end
+
     def self.create_monthly_report_spreedsheet(store, reports, start_date, end_date, email)
-      session = GoogleDrive.login(ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD'])
+      session = create_session
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Relatório mês a mês", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
       spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
@@ -20,7 +40,7 @@ module VndaAPI
     end
 
     def self.create_state_report_spreedsheet(store, reports, start_date, end_date, email)
-      session = GoogleDrive.login(ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD'])
+      session = create_session
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Relatório por estado", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
       spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
@@ -34,7 +54,7 @@ module VndaAPI
     end
 
     def self.create_abc_curve_report_spreedsheet(store, reports, start_date, end_date, email)
-      session = GoogleDrive.login(ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD'])
+      session = create_session
       spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Curva ABC de produtos vendidos", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
       spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
