@@ -32,7 +32,7 @@ class StateMapper
     'Ceara' => 'Ceará',
     'Espirito Santo' => 'Espírito Santo',
     'Federal District' => 'Distrito Federal',
-    'State of Goias' => 'Goiás',
+    'Goias' => 'Goiás',
     'Maranhao' => 'Maranhão',
     'Para' => 'Pará',
     'Paraiba' => 'Paraíba',
