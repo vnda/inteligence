@@ -36,6 +36,10 @@ module Store::Reports::State
         ga_visits = ga_visits['by_month'].group_by {|x| StateMapper.state_for(x['region'])}
         ga_visits.each do |key, value|
           next if key == '(not set)'
+          if results[key] == nil
+            puts "key fudida: #{key}"
+            puts results.keys
+          end
           results[key][:pageviews] = value.first['pageviews']
           results[key][:visits] = value.first['sessions']
           results[key][:unique_users] = value.first['users']

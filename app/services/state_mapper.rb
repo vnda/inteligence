@@ -43,6 +43,7 @@ class StateMapper
     }.freeze
 
   def self.state_for(state)
+    state.slice!('State of ')
     STATES[state] || state
   end
 end
