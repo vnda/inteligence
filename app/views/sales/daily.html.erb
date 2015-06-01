@@ -24,6 +24,7 @@
       </thead>
       <tbody>
         <% @reports.each do |report| %>
+          <% if report.payload.present? %>
           <tr>
             <td class="text-center"><%= report.start.strftime("%d/%m/%Y") %></td>
             <td class="text-center"><%= report.payload.first['orders_count'] %></td>
@@ -35,6 +36,7 @@
             <td class="text-center"><%= report.payload.first['pageviews'] %></td>
             <td class="text-center"><%= report.payload.first['unique_users'] %></td>
           </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>
