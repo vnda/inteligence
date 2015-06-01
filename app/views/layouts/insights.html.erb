@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Materil | Responsive Web Admin App with AngularJS And Bootstrap</title>
+  <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <link rel="stylesheet" href="/libs/assets/animate.css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="/libs/assets/font-awesome/css/font-awesome.css" type="text/css" />
+  <link rel="stylesheet" href="/libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="/libs/jquery/waves/dist/waves.css" type="text/css" />
+
+  <link rel="stylesheet" href="/styles/material-design-icons.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/font.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/app.css" type="text/css" />
+
+</head>
+<body>
+<div class="app">
+  
+  <!-- aside -->
+  <aside id="aside" class="app-aside modal fade " role="menu">
+    <div class="left">
+      <div class="box bg-white">
+  <div class="navbar md-whiteframe-z1 no-radius blue">
+    <!-- brand -->
+    <a class="navbar-brand" style="background-color: #F57C00;">
+      <span class="hidden-folded m-l inline">Vnda</span>
+    </a>
+    <!-- / brand -->
+  </div>
+  <div class="box-row">
+    <div class="box-cell scrollable hover">
+      <div class="box-inner">
+        <div id="nav">
+          <nav ui-nav>
+            <ul class="nav">
+              <li class="nav-header m-v-sm hidden-folded">
+                Relatórios
+              </li>
+              
+              
+              <li class="b-b b m-v-sm"></li>
+              <li>
+                <a href="page.document.html">
+                  <span>Vendas</span>
+                </a>
+              </li>
+              <li>
+                <a href="page.document.html">
+                  <span>Vendas por estado</span>
+                </a>
+              </li>
+              <li class="m-b-sm">
+                <a href="../angular">
+                  <span>Curva abc de produtos</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </aside>
+  <!-- / aside -->
+  
+  <!-- content -->
+  <div id="content" class="app-content" role="main">
+    <div class="box">
+      <div class="navbar md-whiteframe-z1 no-radius" style="background-color: #F57C00;">
+        <a md-ink-ripple  data-toggle="modal" data-target="#aside" class="navbar-item pull-left visible-xs visible-sm"><i class="mdi-navigation-menu i-24"></i></a>
+
+        <div class="navbar-item pull-left h4" style="color: white;">Insights</div>
+        
+        <div class="pull-right"></div>
+
+      </div>
+      <div class="box-row">
+        <div class="box-cell">
+          <div class="box-inner padding">
+            
+
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= yield %>
+    </div>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+      <!-- / -->
+    </div>
+
+  </div>
+  <!-- / content -->
+
+
+    </div>
+  </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+<script src="/libs/jquery/jquery/dist/jquery.js"></script>
+<script src="/libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/libs/jquery/waves/dist/waves.js"></script>
+
+<script src="/scripts/ui-load.js"></script>
+<script src="/scripts/ui-jp.config.js"></script>
+<script src="/scripts/ui-jp.js"></script>
+<script src="/scripts/ui-nav.js"></script>
+<script src="/scripts/ui-toggle.js"></script>
+<script src="/scripts/ui-waves.js"></script>
+
+</body>
+</html>
