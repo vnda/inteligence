@@ -26,14 +26,14 @@
         <% @reports.each do |report| %>
           <tr>
             <td class="text-center"><%= report.start.strftime("%m/%Y") %></td>
-            <td class="text-center"><%= report.payload.first['orders_count'] %></td>
-            <td class="text-center"><%= number_to_currency(report.payload.first['average_ticket'].round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
-            <td class="text-center"><%= number_to_currency(report.payload.first['orders_yield'].round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
-            <td class="text-center"><%= report.payload.first['average_itens'].round(2) %></td>
-            <td class="text-center"><%= report.payload.first['conversion_tax'].round(4) %></td>
-            <td class="text-center"><%= report.payload.first['visits'] %></td>
-            <td class="text-center"><%= report.payload.first['pageviews'] %></td>
-            <td class="text-center"><%= report.payload.first['unique_users'] %></td>
+            <td class="text-center"><%= report.payload['orders_count'] %></td>
+            <td class="text-center"><%= number_to_currency(report.payload['average_ticket'].round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
+            <td class="text-center"><%= number_to_currency(report.payload['orders_yield'].round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
+            <td class="text-center"><%= report.payload['average_itens'].round(2) %></td>
+            <td class="text-center"><%= report.payload['conversion_tax'].round(4) %></td>
+            <td class="text-center"><%= report.payload['visits'] %></td>
+            <td class="text-center"><%= report.payload['pageviews'] %></td>
+            <td class="text-center"><%= report.payload['unique_users'] %></td>
           </tr>
         <% end %>
       </tbody>
