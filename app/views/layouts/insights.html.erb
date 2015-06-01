@@ -43,20 +43,20 @@
               
               <li class="b-b b m-v-sm"></li>
               <li>
-                <a href="page.document.html">
+                <a href="/sales/daily?token=<%= @store.token %>"
                   <span>Vendas</span>
                 </a>
               </li>
-              <li>
-                <a href="page.document.html">
+              <!--li>
+                <a href="/state/daily?token=<%= @store.token %>"
                   <span>Vendas por estado</span>
                 </a>
               </li>
               <li class="m-b-sm">
-                <a href="../angular">
+                <a href="/abc_curve/daily?token=<%= @store.token %>"
                   <span>Curva abc de produtos</span>
                 </a>
-              </li>
+              </li -->
             </ul>
           </nav>
         </div>
@@ -87,7 +87,7 @@
 
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
       <%= yield %>
     </div>
   </div>

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def store
-    Store.find_by!(token: params[:token])
+    @store = Store.find_by!(token: params[:token])
   end
 
   def end_date

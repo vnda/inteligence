@@ -12,6 +12,13 @@ Rails.application.routes.draw do
       resource :abc_curve, only: [:show]
     end
   end
-  resources :sales, only: [:index] 
   resources :stores
+
+  resource :sales do
+    member do
+      get "monthly"
+      get 'weekly'
+      get 'daily'
+    end
+  end
 end
