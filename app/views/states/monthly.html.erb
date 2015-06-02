@@ -2,9 +2,9 @@
   <div class="panel-heading">
     Vendas por estado (Últimos 30 dias) - <%= @report.start.strftime("%d/%m/%Y") %> até <%= @report.end.strftime("%d/%m/%Y") %> 
     <span class="btn-group pull-right" role="group">
-      <a href="/states/daily?token=<%= @store.token %>" class="btn btn-default">Diário</a>
-      <a href="/states/weekly?token=<%= @store.token %>" class="btn btn-default">Semanal</a>
-      <a href="/states/monthly?token=<%= @store.token %>" class="btn btn-dark">Mensal</a>
+      <a href="/states/daily?token=<%= @store.token %>" class="btn btn-default">Ontem</a>
+      <a href="/states/weekly?token=<%= @store.token %>" class="btn btn-default">Últimos 15 dias</a>
+      <a href="/states/monthly?token=<%= @store.token %>" class="btn btn-dark">Últimos 30 dias</a>
     </span>
   </div>
   <div class="table-responsive">
