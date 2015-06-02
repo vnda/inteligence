@@ -3,8 +3,8 @@
     Abc de Produtos (Por semana) - <%= @report.start.strftime("%d/%m/%Y") %> até <%= @report.end.strftime("%d/%m/%Y") %> 
 
     <span class="btn-group pull-right" role="group">
-      <a href="/abc_curve/daily?token=<%= @store.token %>" class="btn btn-dark">Diário</a>
-      <a href="/abc_curve/weekly?token=<%= @store.token %>" class="btn btn-default">Semanal</a>
+      <a href="/abc_curve/daily?token=<%= @store.token %>" class="btn btn-default">Diário</a>
+      <a href="/abc_curve/weekly?token=<%= @store.token %>" class="btn btn-dark">Semanal</a>
       <a href="/abc_curve/monthly?token=<%= @store.token %>" class="btn btn-default">Mensal</a>
     </span>
   </div>
