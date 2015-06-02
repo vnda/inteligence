@@ -1,7 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     Abc de Produtos (Por semana) - <%= @report.start.strftime("%d/%m/%Y") %> até <%= @report.end.strftime("%d/%m/%Y") %> 
-
     <span class="btn-group pull-right" role="group">
       <a href="/abc_curve/daily?token=<%= @store.token %>" class="btn btn-default">Diário</a>
       <a href="/abc_curve/weekly?token=<%= @store.token %>" class="btn btn-dark">Semanal</a>
