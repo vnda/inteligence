@@ -21,4 +21,20 @@ Rails.application.routes.draw do
       get 'daily'
     end
   end
+
+  resource :states do
+    member do
+      get "monthly"
+      get 'weekly'
+      get 'daily'
+    end
+  end
+
+  resource :abc_curve do
+    member do
+      get "monthly"
+      get 'weekly'
+      get 'daily'
+    end
+  end
 end

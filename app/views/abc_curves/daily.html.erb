@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Abc de Produtos (Por dia) - <%= @report.start.strftime("%d/%m/%Y") %>
+    <span class="btn-group pull-right" role="group">
+      <a href="/abc_curve/daily?token=<%= @store.token %>" class="btn btn-dark">Diário</a>
+      <a href="/abc_curve/weekly?token=<%= @store.token %>" class="btn btn-default">Semanal</a>
+      <a href="/abc_curve/monthly?token=<%= @store.token %>" class="btn btn-default">Mensal</a>
+    </span>
+  </div>
+  <div class="table-responsive">
+    <table class="table datatables table-striped b-t b-b">
+      <thead>
+        <tr>
+          <th class="text-center">Referencia</th>
+          <th class="text-center">Nome</th>
+          <th class="text-center">Quantidade</th>
+          <th class="text-center">Preço unitário</th>
+          <th class="text-center">Preço total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @report.payload.each do |report| %>
+          <tr>
+            <td class="text-center"><%= report['reference'] %></td>
+            <td class="text-center"><%= report['name'] %></td>
+            <td class="text-center"><%= report['quantity'] %></td>
+            <td class="text-center"><%= number_to_currency((report['price'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
+            <td class="text-center"><%= number_to_currency((report['total_price'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
