@@ -15,7 +15,7 @@ class Store < ActiveRecord::Base
   def update_daily_reports
     beginning_of_day = DateTime.now.beginning_of_day - 1.day
     end_of_day = DateTime.now.end_of_day - 1.day
-    
+
     update_monthly_for(beginning_of_day, end_of_day, "daily")
     clear_old_reports_for(beginning_of_day - 31.days, "daily")
 
@@ -75,8 +75,6 @@ class Store < ActiveRecord::Base
     end
   end
 
-  private
-
   def update_monthly_for(start_date, end_date, date_type)
     sales_report = monthly_report_for(start_date, end_date)
     self.monthly_reports << MonthlyReport.new(start: start_date, end: end_date, payload: sales_report.to_json, date_type: date_type)
@@ -98,6 +96,8 @@ class Store < ActiveRecord::Base
     self.abc_curve_reports.where("abc_curve_reports.end < ? AND abc_curve_reports.date_type = ?", old_date, date_type).destroy_all
     self.state_reports.where("state_reports.end < ? AND state_reports.date_type = ?", old_date, date_type).destroy_all
   end
+
+  private
 
   def generate_token
     self.token = loop do
