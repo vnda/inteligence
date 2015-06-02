@@ -12,6 +12,12 @@
   <link rel="stylesheet" href="/styles/material-design-icons.css" type="text/css" />
   <link rel="stylesheet" href="/styles/font.css" type="text/css" />
   <link rel="stylesheet" href="/styles/app.css" type="text/css" />
+  <%= stylesheet_link_tag '//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css' %>
+  <style type="text/css">
+    .dataTables_info{
+      padding-bottom: 10px;  
+    }
+  </style>
 
 </head>
 <body>
@@ -121,6 +127,14 @@
 <script src="/scripts/ui-nav.js"></script>
 <script src="/scripts/ui-toggle.js"></script>
 <script src="/scripts/ui-waves.js"></script>
+<%= javascript_include_tag '//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js', '//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js' %>
 
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $('.datatables').dataTable({
+    "bPaginate": false
+  });
+  } );
+</script>
 </body>
 </html>
