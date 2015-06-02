@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    Vendas por estado (Por dia) - <%= @report.start.strftime("%d/%m/%Y") %>
+    Vendas por estado (Últimos 15 dias) - <%= @report.start.strftime("%d/%m/%Y") %> até <%= @report.end.strftime("%d/%m/%Y") %>
     <span class="btn-group pull-right" role="group">
       <a href="/states/daily?token=<%= @store.token %>" class="btn btn-default">Diário</a>
       <a href="/states/weekly?token=<%= @store.token %>" class="btn btn-dark">Semanal</a>
