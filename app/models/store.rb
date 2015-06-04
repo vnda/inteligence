@@ -92,7 +92,7 @@ class Store < ActiveRecord::Base
     self.monthly_reports.where("monthly_reports.end < ? AND monthly_reports.date_type = ?", old_date, date_type).destroy_all
   end
 
-  def clear_old_other_reports_for(old_date, data_type)
+  def clear_old_other_reports_for(old_date, date_type)
     self.abc_curve_reports.where("abc_curve_reports.end < ? AND abc_curve_reports.date_type = ?", old_date, date_type).destroy_all
     self.state_reports.where("state_reports.end < ? AND state_reports.date_type = ?", old_date, date_type).destroy_all
   end
