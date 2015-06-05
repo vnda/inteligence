@@ -33,14 +33,14 @@ class Store < ActiveRecord::Base
     beginning_of_week = DateTime.now.beginning_of_week - 1.week
     end_of_week = DateTime.now.end_of_week - 1.week
     update_monthly_for(beginning_of_week, end_of_week, "weekly")
-    clear_old_reports_for(beginning_of_day - 32.weeks, "weekly")
+    clear_old_reports_for(beginning_of_week - 32.weeks, "weekly")
   end
 
   def update_monthly_reports
     beginning_of_month = DateTime.now.beginning_of_month - 1.month
     end_of_month = DateTime.now.end_of_month - 1.month
     update_monthly_for(beginning_of_month, end_of_month, "monthly")
-    clear_old_reports_for(beginning_of_day - 12.months, "monthly")
+    clear_old_reports_for(beginning_of_month - 12.months, "monthly")
   end
 
   def update_full_daily_reports
