@@ -1,5 +1,6 @@
 require 'httparty'
 require 'pp'
+require 'uri'
 
 module VndaAPI
   class Variants
@@ -17,7 +18,7 @@ module VndaAPI
 
     private
     def get(url)
-      JSON.parse(self.class.get(url, {basic_auth: @auth}).body)
+      JSON.parse(self.class.get(URI.escape(url), {basic_auth: @auth}).body)
     end
   end
 end
