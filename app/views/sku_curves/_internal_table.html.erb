@@ -1,0 +1,36 @@
+<div class="table-responsive">
+  <table class="table datatables table-striped b-t b-b">
+    <thead>
+      <tr>
+        <th class="text-center">SKU</th>
+        <th class="text-center">Nome da Variante</th>
+        <% @report.payload.first['properties'].each do |key, value|  %>
+          <th class="text-center"><%= JSON.parse(value)['name'] %></th>
+        <% end %>
+        <th class="text-center">Referência</th>
+        <th class="text-center">Nome</th>
+        <th class="text-center">Quantidade</th>
+        <th class="text-center">Preço unitário</th>
+        <th class="text-center">Preço total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @report.payload.each do |report| %>
+        <tr>
+          <td class="text-center"><%= report['sku'] %></td>
+          <td class="text-center"><%= report['variant_name'] %></td>
+          
+          <% report['properties'].each do |key, value|  %>
+            <td class="text-center"><%= JSON.parse(value)['value'] %></td>
+          <% end %>
+
+          <td class="text-center"><%= report['reference'] %></td>
+          <td class="text-center"><%= report['name'] %></td>
+          <td class="text-center"><%= report['quantity'] %></td>
+          <td class="text-center"><%= number_to_currency((report['price'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
+          <td class="text-center"><%= number_to_currency((report['total_price'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

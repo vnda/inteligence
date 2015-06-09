@@ -1,3 +1,4 @@
+
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
@@ -31,6 +32,14 @@ Rails.application.routes.draw do
   end
 
   resource :abc_curve do
+    member do
+      get "monthly"
+      get 'weekly'
+      get 'daily'
+    end
+  end
+
+  resource :sku_curve do
     member do
       get "monthly"
       get 'weekly'

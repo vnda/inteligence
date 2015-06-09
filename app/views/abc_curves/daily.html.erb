@@ -7,28 +7,5 @@
       <a href="/abc_curve/monthly?token=<%= @store.token %>" class="btn btn-default">Últimos 30 dias</a>
     </span>
   </div>
-  <div class="table-responsive">
-    <table class="table datatables table-striped b-t b-b">
-      <thead>
-        <tr>
-          <th class="text-center">Referência</th>
-          <th class="text-center">Nome</th>
-          <th class="text-center">Quantidade</th>
-          <th class="text-center">Preço unitário</th>
-          <th class="text-center">Preço total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @report.payload.each do |report| %>
-          <tr>
-            <td class="text-center"><%= report['reference'] %></td>
-            <td class="text-center"><%= report['name'] %></td>
-            <td class="text-center"><%= report['quantity'] %></td>
-            <td class="text-center"><%= number_to_currency((report['price'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
-            <td class="text-center"><%= number_to_currency((report['total_price'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+  <%= render :partial => 'internal_table' %>
 </div>

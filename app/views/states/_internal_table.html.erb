@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table datatables table-striped b-t b-b">
+    <thead>
+      <tr>
+        <th class="text-center">Estado</th>
+        <th class="text-center">Total de pedidos</th>
+        <th class="text-center">Ticket médio</th>
+        <th class="text-center">Faturamento</th>
+        <th class="text-center">Média de itens por pedido</th>
+        <th class="text-center">Taxa de Conversão</th>
+        <th class="text-center">Visitas</th>
+        <th class="text-center">Page view</th>
+        <th class="text-center">Usuários Únicos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @report.payload.keys.each do |key| %>
+        <tr>
+          <td class="text-center"><%= key %></td>
+          <td class="text-center"><%= @report.payload[key]['orders_count'] %></td>
+          <td class="text-center"><%= number_to_currency((@report.payload[key]['average_ticket'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
+          <td class="text-center"><%= number_to_currency((@report.payload[key]['orders_yield'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
+          <td class="text-center"><%= (@report.payload[key]['average_itens'] || 0).round(2) %></td>
+          <td class="text-center"><%= (@report.payload[key]['conversion_tax'] || 0).round(4) %></td>
+          <td class="text-center"><%= @report.payload[key]['visits'] %></td>
+          <td class="text-center"><%= @report.payload[key]['pageviews'] %></td>
+          <td class="text-center"><%= @report.payload[key]['unique_users'] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

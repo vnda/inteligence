@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150601161532) do
+ActiveRecord::Schema.define(version: 20150609174749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,19 @@ ActiveRecord::Schema.define(version: 20150601161532) do
   end
 
   add_index "monthly_reports", ["store_id"], name: "index_monthly_reports_on_store_id", using: :btree
+
+  create_table "sku_curve_reports", force: true do |t|
+    t.integer  "store_id"
+    t.date     "start"
+    t.date     "end"
+    t.string   "drive_url"
+    t.json     "payload"
+    t.string   "date_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sku_curve_reports", ["store_id"], name: "index_sku_curve_reports_on_store_id", using: :btree
 
   create_table "state_reports", force: true do |t|
     t.integer  "store_id"
