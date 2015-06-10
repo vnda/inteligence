@@ -75,13 +75,6 @@ GEM
       nokogiri (>= 1.4.4, != 1.5.2, != 1.5.1)
       oauth (>= 0.3.6)
       oauth2 (>= 0.5.0)
-    googleauth (0.4.0)
-      faraday (~> 0.9)
-      jwt (~> 1.4)
-      logging (~> 1.8)
-      memoist (~> 0.11)
-      multi_json (= 1.11)
-      signet (~> 0.6)
     hike (1.2.3)
     hitimes (1.2.2)
     httparty (0.13.3)
@@ -99,13 +92,8 @@ GEM
     jwt (1.4.1)
     launchy (2.4.3)
       addressable (~> 2.3)
-    little-plugger (1.1.3)
-    logging (1.8.2)
-      little-plugger (>= 1.1.3)
-      multi_json (>= 1.8.4)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    memoist (0.12.0)
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
@@ -132,6 +120,7 @@ GEM
     puma (2.11.2)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)
+    rack-cors (0.4.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -259,6 +248,7 @@ DEPENDENCIES
   pry
   pry-nav
   puma
+  rack-cors
   rails (= 4.1.9)
   rails_12factor
   rake

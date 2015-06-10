@@ -13,6 +13,7 @@ gem 'puma'
 gem 'sidekiq'
 gem 'sidetiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'rack-cors', :require => 'rack/cors'
 
 gem 'jquery-rails'
 gem 'turbolinks'
