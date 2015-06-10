@@ -2,9 +2,9 @@
   <div class="panel-heading">
     Abc de Produtos (Últimos 15 dias) - <%= @report.start.strftime("%d/%m/%Y") %> até <%= @report.end.strftime("%d/%m/%Y") %> 
     <span class="btn-group pull-right" role="group">
-      <a href="/abc_curve/daily?token=<%= @store.token %>" class="btn btn-default">Ontem</a>
-      <a href="/abc_curve/weekly?token=<%= @store.token %>" class="btn btn-dark">Últimos 15 dias</a>
-      <a href="/abc_curve/monthly?token=<%= @store.token %>" class="btn btn-default">Últimos 30 dias</a>
+      <a href="/admin/insights/abc_curve/daily?token=<%= @store.token %>" class="btn btn-default">Ontem</a>
+      <a href="/admin/insights/abc_curve/weekly?token=<%= @store.token %>" class="btn btn-dark">Últimos 15 dias</a>
+      <a href="/admin/insights/abc_curve/monthly?token=<%= @store.token %>" class="btn btn-default">Últimos 30 dias</a>
     </span>
   </div>
   <%= render :partial => 'internal_table' %>

@@ -15,35 +15,39 @@ Rails.application.routes.draw do
   end
   resources :stores
 
-  resource :sales do
-    member do
-      get "monthly"
-      get 'weekly'
-      get 'daily'
-    end
-  end
+  namespace :admin do
+    namespace :insights do
+      resource :sales do
+        member do
+          get "monthly"
+          get 'weekly'
+          get 'daily'
+        end
+      end
 
-  resource :states do
-    member do
-      get "monthly"
-      get 'weekly'
-      get 'daily'
-    end
-  end
+      resource :states do
+        member do
+          get "monthly"
+          get 'weekly'
+          get 'daily'
+        end
+      end
 
-  resource :abc_curve do
-    member do
-      get "monthly"
-      get 'weekly'
-      get 'daily'
-    end
-  end
+      resource :abc_curve do
+        member do
+          get "monthly"
+          get 'weekly'
+          get 'daily'
+        end
+      end
 
-  resource :sku_curve do
-    member do
-      get "monthly"
-      get 'weekly'
-      get 'daily'
+      resource :sku_curve do
+        member do
+          get "monthly"
+          get 'weekly'
+          get 'daily'
+        end
+      end
     end
   end
 end
