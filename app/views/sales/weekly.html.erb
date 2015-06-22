@@ -11,7 +11,8 @@
     <table class="table datatables table-striped b-t b-b">
       <thead>
         <tr>
-          <th class="text-center">Data</th>
+          <th class="text-center">Desde</th>
+          <th class="text-center">Até</th>
           <th class="text-center">Total de pedidos</th>
           <th class="text-center">Ticket médio</th>
           <th class="text-center">Faturamento</th>
@@ -26,7 +27,8 @@
         <% @reports.each do |report| %>
           <% if report.payload.present? %>
             <tr>
-              <td class="text-center"><%= report.start.strftime("%d/%m/%Y") %> até <%=report.end.strftime("%d/%m/%Y") %></td>
+              <td class="text-center"><%= report.start.strftime("%d/%m/%Y") %></td>
+              <td class="text-center"><%=report.end.strftime("%d/%m/%Y") %></td>
               <td class="text-center"><%= report.payload.first['orders_count'] %></td>
               <td class="text-center"><%= number_to_currency((report.payload.first['average_ticket'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
               <td class="text-center"><%= number_to_currency((report.payload.first['orders_yield'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>

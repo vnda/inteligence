@@ -144,16 +144,16 @@
 <script src="//inteligence-vnda.herokuapp.com/scripts/ui-nav.js"></script>
 <script src="//inteligence-vnda.herokuapp.com/scripts/ui-toggle.js"></script>
 <script src="//inteligence-vnda.herokuapp.com/scripts/ui-waves.js"></script>
-<%= javascript_include_tag '//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js', '//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js', '//cdn.datatables.net/plug-ins/1.10.7/sorting/date-de.js' %>
+<%= javascript_include_tag '//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js', '//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js', '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js', '//cdn.datatables.net/plug-ins/1.10.7/sorting/datetime-moment.js' %>
 
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
+    $.fn.dataTable.moment( 'dd/mm/yyyy' );
+    $.fn.dataTable.moment( 'mm/yyyy' );
+
     $('.datatables').dataTable({
-    "bPaginate": false,
-    columnDefs: [
-       { type: 'de_date', targets: 1 }
-     ]
-  });
+      "bPaginate": false
+    });
   } );
 </script>
 </body>
