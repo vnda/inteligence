@@ -67,14 +67,51 @@ module VndaAPI
       spreedsheed.human_url
     end
 
+    def self.create_sku_curve_report_spreedsheet(store, reports, start_date, end_date, email)
+      session = create_session
+      spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Curva ABC de variantes vendidos", start_date, end_date))
+      spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
+      spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
+      worksheet = spreedsheed.worksheets[0]
+      worksheet.max_rows = reports.count + 1
+      keys = sku_keys(reports.first, 'name')
+      worksheet.max_cols = 7 + keys.size
+      create_sku_curve_header(worksheet, keys)
+      fill_sku_curve_data(worksheet, reports)
+      worksheet.save
+      spreedsheed.human_url
+    end
+
 
     private
+
+    def sku_keys(report, key)
+      keys = []
+      report['properties'].each do |key, value|
+        keys << JSON.parse(value)[key]
+      end
+      keys
+    end
+
     def self.create_abc_curve_header(worksheet)
       worksheet[1,1] = "Referência"
       worksheet[1,2] = "Nome"
       worksheet[1,3] = "Quantidade"
       worksheet[1,4] = "Preço"
       worksheet[1,5] = "Valor total"
+    end
+
+    def self.create_sku_curve_header(worksheet, keys)
+      worksheet[1,1] = "SKU"
+      worksheet[1,2] = "Nome da variante"
+      keys.each_with_index do |x, index|
+        worksheet[1,index + 3] = x
+      end 
+      worksheet[1,3 + keys.size] = "Referência"
+      worksheet[1,4 + keys.size] = "Nome"
+      worksheet[1,5 + keys.size] = "Quantidade"
+      worksheet[1,6 + keys.size] = "Preço"
+      worksheet[1,7 + keys.size] = "Valor total"
     end
 
     def self.create_header(worksheet, head)
@@ -95,10 +132,29 @@ module VndaAPI
     def self.fill_abc_curve_data(worksheet, reports)
       reports.sort_by{|x| x[:quantity]}.reverse!.each_with_index do |report, index|
         worksheet[2 + index,1] = "'"+report[:reference]
-        worksheet[2 + index,2] = report[:name]
+        worksheet[2 + index,2] = report[:variant_name]
+
         worksheet[2 + index,3] = report[:quantity]
         worksheet[2 + index,4] = "R$ " + report[:price].round(2).to_s
         worksheet[2 + index,5] = "R$ " + report[:total_price].round(2).to_s
+      end
+    end
+
+    def self.fill_sku_curve_data(worksheet, reports)
+      reports.sort_by{|x| x[:quantity]}.reverse!.each_with_index do |report, index|
+        worksheet[2 + index,1] = "'"+report[:sku]
+        worksheet[2 + index,2] = report[:variant_name]
+
+        values = sku_keys(report, 'value')
+        values.each_with_index do |x, index|
+          worksheet[1,index + 3] = x
+        end 
+
+        worksheet[2 + index,3 + values.size] = "'"+report[:reference]
+        worksheet[2 + index,4 + values.size] = report[:name]
+        worksheet[2 + index,5 + values.size] = report[:quantity]
+        worksheet[2 + index,6 + values.size] = "R$ " + report[:price].round(2).to_s
+        worksheet[2 + index,7 + values.size] = "R$ " + report[:total_price].round(2).to_s
       end
     end
 

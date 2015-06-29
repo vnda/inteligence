@@ -1,11 +1,22 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Abc de Produtos (Últimos 30 dias) - <%= @report.start.strftime("%d/%m/%Y") %> até <%= @report.end.strftime("%d/%m/%Y") %> 
-    <span class="btn-group pull-right" role="group">
-      <a href="/admin/insights/abc_curve/daily?token=<%= @store.token %>" class="btn btn-default">Ontem</a>
-      <a href="/admin/insights/abc_curve/weekly?token=<%= @store.token %>" class="btn btn-default">Últimos 15 dias</a>
-      <a href="/admin/insights/abc_curve/monthly?token=<%= @store.token %>" class="btn btn-dark">Últimos 30 dias</a>
-    </span>
+<div class="col-lg-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Abc de Produtos (Últimos 30 dias) - <%= @report.start.strftime("%d/%m/%Y") %> até <%= @report.end.strftime("%d/%m/%Y") %> 
+      <ul class="nav navbar-tool pull-right">    
+        <li class="dropdown pull-right">
+          <a md-ink-ripple="" data-toggle="dropdown" class="waves-effect" aria-expanded="false">
+            <i class="mdi-navigation-more-vert i-24"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
+            <li><a href="/admin/insights/abc_curve/daily?token=<%= @store.token %>">Diário</a></li>
+            <li><a href="/admin/insights/abc_curve/weekly?token=<%= @store.token %>">Semanal</a></li>
+            <li><a href="/admin/insights/abc_curve/monthly?token=<%= @store.token %>">Mensal</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <%= render :partial => 'internal_table' %>
   </div>
-  <%= render :partial => 'internal_table' %>
 </div>
+
+<%= render :partial => 'shared/other_periods', :locals => {:action => '/api/v1/abc_curve' } %>

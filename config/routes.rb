@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resource :monthly, only: [:show]
       resource :state, only: [:show]
       resource :abc_curve, only: [:show]
+      resource :sku_curve, only: [:show]
     end
   end
   resources :stores

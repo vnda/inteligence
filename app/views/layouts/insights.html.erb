@@ -145,6 +145,7 @@
 <script src="//inteligence-vnda.herokuapp.com/scripts/ui-toggle.js"></script>
 <script src="//inteligence-vnda.herokuapp.com/scripts/ui-waves.js"></script>
 <%= javascript_include_tag '//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js', '//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js', '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js', '//cdn.datatables.net/plug-ins/1.10.7/sorting/datetime-moment.js' %>
+<script src="//inteligence-vnda.herokuapp.com/scripts/bootstrap-datepicker.js"></script>
 
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
@@ -155,7 +156,38 @@
       "bPaginate": false,
       "order": [[ 0, "desc" ]]
     });
-  } );
+    $.fn.datepicker.dates['pt-BR'] = {
+      days: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      daysShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+      daysMin: ["Do", "Se", "Te", "Qu", "Qu", "Se", "Sa"],
+      months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+      monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+      today: "Hoje",
+      clear: "Limpar"
+    };
+    $('.datepicker').datepicker({
+      orientation: "auto top",
+      language: "pt-BR"
+    });
+
+    $('#other_periods').submit(function(e){
+      $('#success').hide();
+      $('#error').hide();
+
+      $.ajax({
+        type: "GET",
+        url: $('#other_periods').attr('action'),
+        data: $("#other_periods").serialize(), // serializes the form's elements.
+        success: function(data){
+          $('#success').show();
+        },
+        error: function(data){
+          $('#error').show();
+        }
+      });
+      return false;   
+    });
+  });
 </script>
 </body>
 </html>

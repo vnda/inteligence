@@ -1,0 +1,35 @@
+<div class="col-lg-12">
+  <div class="panel panel-default">
+    <div class="panel-heading bg-white">
+      Outro período?<br>
+      <small class="text-muted">Você pode customizar um período de tempo para seu relatório. Para isso, selecione o período e digite seu email. Assim que processarmos o seu relatório, lhe enviaremos!</small>
+      <br><br>
+      <div id="success" style="display: none;" class="alert alert-success">
+        <small class="text-muted">Ok, em breve você receberá o relatório no email informado!</small>
+      </div>
+      <div id="error" style="display: none;" class="alert alert-danger">
+        <small class="text-muted">Por favor, verifique os dados e tente novamente!</small>
+      </div>
+    </div>
+    <div class="panel-body">
+      <form class="form-inline" role="form" action="<%= action %>" id="other_periods">
+        <input type="hidden" name="token" value="<%= @store.token %>" />
+        <% if local_assigns[:export_type] %>
+          <input type="hidden" name="export_type" value="<%= export_type %>" />
+        <% end %>
+        <div class="form-group">
+          <input class="form-control datepicker" data-date-format="dd/mm/yyyy" name="start" required placeholder="Desde">
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control datepicker" data-date-format="dd/mm/yyyy" name="end" required placeholder="Até">
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" id="exampleInputPassword2" name="email" required placeholder="Seu email">
+        </div>
+        <button type="submit" class="btn btn-default waves-effect">Enviar</button>
+      </form>
+    </div>
+  </div>
+</div>
