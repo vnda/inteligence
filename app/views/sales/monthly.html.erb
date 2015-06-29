@@ -1,52 +1,54 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    Vendas (Por mês)
-    <ul class="nav navbar-tool pull-right">    
-      <li class="dropdown pull-right">
-        <a md-ink-ripple="" data-toggle="dropdown" class="waves-effect" aria-expanded="false">
-          <i class="mdi-navigation-more-vert i-24"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
-          <li><a href="/admin/insights/sales/daily?token=<%= @store.token %>">Diário</a></li>
-          <li><a href="/admin/insights/sales/weekly?token=<%= @store.token %>">Semanal</a></li>
-          <li><a href="/admin/insights/sales/monthly?token=<%= @store.token %>">Mensal</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <div class="table-responsive">
-    <table class="table datatables table-striped b-t b-b">
-      <thead>
-        <tr>
-          <th class="text-center">Data</th>
-          <th class="text-center">Total de pedidos</th>
-          <th class="text-center">Ticket médio</th>
-          <th class="text-center">Faturamento</th>
-          <th class="text-center">Média de itens por pedido</th>
-          <th class="text-center">Taxa de Conversão</th>
-          <th class="text-center">Visitas</th>
-          <th class="text-center">Page view</th>
-          <th class="text-center">Usuários Únicos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @reports.each do |report| %>
-          <% if report.payload.present? %>
-            <tr>
-              <td class="text-center"><%= report.start.strftime("%m/%Y") %></td>
-              <td class="text-center"><%= report.payload.first['orders_count'] %></td>
-              <td class="text-center"><%= number_to_currency((report.payload.first['average_ticket'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
-              <td class="text-center"><%= number_to_currency((report.payload.first['orders_yield'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
-              <td class="text-center"><%= (report.payload.first['average_itens'] || 0).round(2) %></td>
-              <td class="text-center"><%= (report.payload.first['conversion_tax'] || 0).round(4) %></td>
-              <td class="text-center"><%= report.payload.first['visits'] %></td>
-              <td class="text-center"><%= report.payload.first['pageviews'] %></td>
-              <td class="text-center"><%= report.payload.first['unique_users'] %></td>
-            </tr>
+<div class="col-lg-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Vendas (Por mês)
+      <ul class="nav navbar-tool pull-right">    
+        <li class="dropdown pull-right">
+          <a md-ink-ripple="" data-toggle="dropdown" class="waves-effect" aria-expanded="false">
+            <i class="mdi-navigation-more-vert i-24"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
+            <li><a href="/admin/insights/sales/daily?token=<%= @store.token %>">Diário</a></li>
+            <li><a href="/admin/insights/sales/weekly?token=<%= @store.token %>">Semanal</a></li>
+            <li><a href="/admin/insights/sales/monthly?token=<%= @store.token %>">Mensal</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="table-responsive">
+      <table class="table datatables table-striped b-t b-b">
+        <thead>
+          <tr>
+            <th class="text-center">Data</th>
+            <th class="text-center">Total de pedidos</th>
+            <th class="text-center">Ticket médio</th>
+            <th class="text-center">Faturamento</th>
+            <th class="text-center">Média de itens por pedido</th>
+            <th class="text-center">Taxa de Conversão</th>
+            <th class="text-center">Visitas</th>
+            <th class="text-center">Page view</th>
+            <th class="text-center">Usuários Únicos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @reports.each do |report| %>
+            <% if report.payload.present? %>
+              <tr>
+                <td class="text-center"><%= report.start.strftime("%m/%Y") %></td>
+                <td class="text-center"><%= report.payload.first['orders_count'] %></td>
+                <td class="text-center"><%= number_to_currency((report.payload.first['average_ticket'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
+                <td class="text-center"><%= number_to_currency((report.payload.first['orders_yield'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => ".") %></td>
+                <td class="text-center"><%= (report.payload.first['average_itens'] || 0).round(2) %></td>
+                <td class="text-center"><%= (report.payload.first['conversion_tax'] || 0).round(4) %></td>
+                <td class="text-center"><%= report.payload.first['visits'] %></td>
+                <td class="text-center"><%= report.payload.first['pageviews'] %></td>
+                <td class="text-center"><%= report.payload.first['unique_users'] %></td>
+              </tr>
+            <% end %>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 <%= render :partial => 'shared/other_periods', :locals => {:action => '//inteligence-vnda.herokuapp.com/api/v1/monthly' } %>
