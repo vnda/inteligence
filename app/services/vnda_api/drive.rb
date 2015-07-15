@@ -85,7 +85,7 @@ module VndaAPI
 
     private
 
-    def sku_keys(report, key)
+    def self.sku_keys(report, key)
       keys = []
       report['properties'].each do |key, value|
         keys << JSON.parse(value)[key]
