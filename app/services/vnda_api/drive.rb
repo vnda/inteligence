@@ -85,10 +85,10 @@ module VndaAPI
 
     private
 
-    def self.sku_keys(report, key)
+    def self.sku_keys(report, chave)
       keys = []
-      report['properties'].each do |key, value|
-        keys << JSON.parse(value)[key]
+      report[:properties].each do |_, value|
+        keys << JSON.parse(value)[chave]
       end
       keys
     end
@@ -146,8 +146,8 @@ module VndaAPI
         worksheet[2 + index,2] = report[:variant_name]
 
         values = sku_keys(report, 'value')
-        values.each_with_index do |x, index|
-          worksheet[1,index + 3] = x
+        values.each_with_index do |x, internal_index|
+          worksheet[2 + index,internal_index + 3] = x
         end 
 
         worksheet[2 + index,3 + values.size] = "'"+report[:reference]
