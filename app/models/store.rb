@@ -78,8 +78,10 @@ class Store < ActiveRecord::Base
   end
 
   def update_monthly_for(start_date, end_date, date_type)
-    sales_report = monthly_report_for(start_date, end_date)
-    self.monthly_reports << MonthlyReport.new(start: start_date, end: end_date, payload: sales_report.to_json, date_type: date_type)
+    if monthly_report_for.where(start: start_date, end: end_date, date_type: date_type).count == 0
+      sales_report = monthly_report_for(start_date, end_date)
+      self.monthly_reports << MonthlyReport.new(start: start_date, end: end_date, payload: sales_report.to_json, date_type: date_type)
+    end
   end
 
   def update_other_for(start_date, end_date, date_type)
