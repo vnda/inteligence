@@ -32,7 +32,7 @@ module Store::Reports::State
 
     def process_ga_data(results, start_date, end_date)
       ga_visits = VndaAPI::GaIntegration.new(self.ga_token, start_date, end_date).state_visits
-      if ga_visits
+      if ga_visits && ga_visits['by_month']
         ga_visits = ga_visits['by_month'].group_by {|x| StateMapper.state_for(x['region'])}
         ga_visits.each do |key, value|
           next if key == '(not set)'

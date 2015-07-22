@@ -35,7 +35,7 @@ module Store::Reports::SkuCurve
     def variant_properties_for(sku)
       api = VndaAPI::Variants.new(api_url,user,password)
       variant = api.variant_info(sku)
-      variant['properties'].select {|k,v| JSON.parse(v)['defining'] }
+      variant['properties'] ? variant['properties'].select {|k,v| JSON.parse(v)['defining'] } : []
     end
   end
   
