@@ -3,6 +3,7 @@ class Store < ActiveRecord::Base
   include Store::Reports::Monthly
   include Store::Reports::State
   include Store::Reports::SkuCurve
+  include Store::Reports::Source
   include Store::OrderLoader
 
   before_create :generate_token
@@ -11,6 +12,7 @@ class Store < ActiveRecord::Base
   has_many :state_reports
   has_many :abc_curve_reports
   has_many :sku_curve_reports
+  has_many :source_reports
 
   validates :name, :api_url, :user, :password, presence: true
 
@@ -93,6 +95,9 @@ class Store < ActiveRecord::Base
     
     state = state_report_for(start_date, end_date)
     self.state_reports << StateReport.new(start: start_date, end: end_date, payload: state.to_json, date_type: date_type)
+    
+    source = source_report_for(start_date, end_date)
+    self.source_reports << SourceReport.new(start: start_date, end: end_date, payload: source.to_json, date_type: date_type)
   end
 
   def clear_old_reports_for(old_date, date_type)
@@ -103,6 +108,7 @@ class Store < ActiveRecord::Base
     self.abc_curve_reports.where("abc_curve_reports.end < ? AND abc_curve_reports.date_type = ?", old_date, date_type).destroy_all
     self.sku_curve_reports.where("sku_curve_reports.end < ? AND sku_curve_reports.date_type = ?", old_date, date_type).destroy_all
     self.state_reports.where("state_reports.end < ? AND state_reports.date_type = ?", old_date, date_type).destroy_all
+    self.source_reports.where("source_reports.end < ? AND source_reports.date_type = ?", old_date, date_type).destroy_all
   end
 
   private

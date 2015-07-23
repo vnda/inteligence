@@ -1,0 +1,30 @@
+<div class="table-responsive">
+  <table class="table datatables table-striped b-t b-b">
+    <thead>
+      <tr>
+        <th class="text-center">Fonte de aquisição</th>
+        <th class="text-center">Número de pedidos</th>
+        <th class="text-center">Faturamento</th>
+        <th class="text-center">Ticket médio</th>
+        <th class="text-center">Visitas</th>
+        <th class="text-center">Page view</th>
+        <th class="text-center">Usuários Únicos</th>
+        <th class="text-center">Taxa de Conversão</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @report.payload.each do |item| %>
+        <tr>
+          <td class="text-center"><%= item['source_medium'] %></td>
+          <td class="text-center"><%= item['orders_count'] %></td>
+          <td class="text-center"><%= number_to_currency((item['revenue'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
+          <td class="text-center"><%= number_to_currency((item['average_ticket'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
+          <td class="text-center"><%= (item['visits'] || 0).round(2) %></td>
+          <td class="text-center"><%= (item['pageviews'] || 0).round(4) %></td>
+          <td class="text-center"><%= item['unique_users'] || 0).round(2) %></td>
+          <td class="text-center"><%= item['conversion_tax'] || 0).round(2) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

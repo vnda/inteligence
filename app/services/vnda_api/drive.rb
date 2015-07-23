@@ -82,6 +82,20 @@ module VndaAPI
       spreedsheed.human_url
     end
 
+    def self.create_source_report_spreedsheet(store, reports, start_date, end_date, email)
+      session = create_session
+      spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Pedidos por fonte de aquisição", start_date, end_date))
+      spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
+      spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
+      worksheet = spreedsheed.worksheets[0]
+      worksheet.max_rows = reports.count + 1
+      worksheet.max_cols = 8
+      create_source_header(worksheet)
+      fill_source_data(worksheet, reports)
+      worksheet.save
+      spreedsheed.human_url
+    end
+
 
     private
 
@@ -91,6 +105,17 @@ module VndaAPI
         keys << JSON.parse(value)[chave]
       end
       keys
+    end
+
+    def self.create_source_header(worksheet)
+      worksheet[1,1] = "Source / Medium"
+      worksheet[1,2] = "# Pedidos"
+      worksheet[1,3] = "Faturamento"
+      worksheet[1,4] = "Ticket médio"
+      worksheet[1,5] = "Visitas"
+      worksheet[1,6] = "Page view"
+      worksheet[1,7] = "Usuários Únicos"
+      worksheet[1,8] = "Taxa de Conversão"
     end
 
     def self.create_abc_curve_header(worksheet)
@@ -137,6 +162,20 @@ module VndaAPI
         worksheet[2 + index,3] = report[:quantity]
         worksheet[2 + index,4] = "R$ " + report[:price].round(2).to_s
         worksheet[2 + index,5] = "R$ " + report[:total_price].round(2).to_s
+      end
+    end
+
+    def self.fill_source_data(worksheet, reports)
+      reports.each_with_index do |report, index|
+        worksheet[2 + index,1] = "'"+report[:source_medium]
+        worksheet[2 + index,2] = report[:orders_count]
+
+        worksheet[2 + index,3] = "R$ " + report[:revenue].round(2).to_s
+        worksheet[2 + index,4] = "R$ " + report[:average_ticket].round(2).to_s
+        worksheet[2 + index,5] = report[:pageviews].to_s
+        worksheet[2 + index,6] = report[:visits].to_s
+        worksheet[2 + index,7] = report[:unique_users].to_s
+        worksheet[2 + index,8] = report[:conversion_tax].round(2).to_s
       end
     end
 

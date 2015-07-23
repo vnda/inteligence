@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resource :state, only: [:show]
       resource :abc_curve, only: [:show]
       resource :sku_curve, only: [:show]
+      resource :source, only: [:show]
     end
   end
   resources :stores
@@ -41,6 +42,14 @@ Rails.application.routes.draw do
   end
 
   resource :sku_curve do
+    member do
+      get "monthly"
+      get 'weekly'
+      get 'daily'
+    end
+  end
+
+  resource :source do
     member do
       get "monthly"
       get 'weekly'

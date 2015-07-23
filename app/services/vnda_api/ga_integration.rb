@@ -21,6 +21,10 @@ module VndaAPI
       get("http://#{@base_uri}/monthly_visits?token=#{@token}&start=#{@start_date}&end=#{@end_date}")
     end
 
+    def source_stats
+      get("http://#{@base_uri}/source_stats?token=#{@token}&start=#{@start_date}&end=#{@end_date}")
+    end
+
     def international_visits
       get("http://#{@base_uri}/international_visits?token=#{@token}&start=#{@start_date}&end=#{@end_date}")
     end
