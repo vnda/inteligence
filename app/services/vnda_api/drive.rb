@@ -84,7 +84,7 @@ module VndaAPI
 
     def self.create_source_report_spreedsheet(store, reports, start_date, end_date, email)
       session = create_session
-      spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Pedidos por fonte de aquisição", start_date, end_date))
+      spreedsheed = session.create_spreadsheet(spreedsheet_name(store.name, "Vendas por origem", start_date, end_date))
       spreedsheed.acl.push({:scope_type => "default", :with_key => true, :role => "reader"})
       spreedsheed.acl.push({:scope_type => "user", :scope => email, :role => "reader"}) unless email.empty?
       worksheet = spreedsheed.worksheets[0]
