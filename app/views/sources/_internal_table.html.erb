@@ -21,8 +21,8 @@
           <td class="text-center"><%= number_to_currency((item['average_ticket'] || 0).round(2), :unit => "R$ ", :separator => ",", :delimiter => "") %></td>
           <td class="text-center"><%= (item['visits'] || 0).round(2) %></td>
           <td class="text-center"><%= (item['pageviews'] || 0).round(4) %></td>
-          <td class="text-center"><%= item['unique_users'] || 0).round(2) %></td>
-          <td class="text-center"><%= item['conversion_tax'] || 0).round(2) %></td>
+          <td class="text-center"><%= (item['unique_users'] || 0).round(2) %></td>
+          <td class="text-center"><%= (item['conversion_tax'] || 0).round(2) %></td>
         </tr>
       <% end %>
     </tbody>
