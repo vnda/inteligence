@@ -21,3 +21,5 @@ class SeedSourcesWorker
     puts "Updated daily reports for #{store.name}"
   end
 end
+
+# Store.all.each {|s| SeedSourcesWorker.perform_async(s.id) } 
